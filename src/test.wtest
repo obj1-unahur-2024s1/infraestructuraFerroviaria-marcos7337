@@ -1,0 +1,71 @@
+import vagonesYLocomotoras.*
+import formacionesYDepositos.*
+
+const vp1 = new VagonDePasajeros(largo = 10, ancho = 4, estaOrdenado = true, tieneBanios = true)
+const vp2 = new VagonDePasajeros(largo = 7, ancho = 2, estaOrdenado = false, tieneBanios = false)
+const vc1 = new VagonDeCarga(cargaMaximaIdeal = 6800, maderasSueltas = 5)
+const vd1 = new VagonDormitorio(compartimientos = 8, camasPorCompartimiento = 3)
+
+const f1 = new Formacion()
+
+test "etapa 1" {
+
+	assert.equals(100, vp1.capacidadDePasajeros())
+	assert.equals(41, vp2.capacidadDePasajeros())
+	assert.equals(0, vc1.capacidadDePasajeros())
+	assert.equals(24, vd1.capacidadDePasajeros())
+	
+	assert.equals(10300, vp1.pesoMaximo())
+	assert.equals(6080, vp2.pesoMaximo())
+	assert.equals(8300, vc1.pesoMaximo())
+	assert.equals(7120, vd1.pesoMaximo())
+	
+	assert.equals(300, vp1.capacidadDeCarga())
+	assert.equals(800, vp2.capacidadDeCarga())
+	assert.equals(4800, vc1.capacidadDeCarga())
+	assert.equals(1200, vd1.capacidadDeCarga())
+	
+	assert.that(vp1.tieneBanios())
+	assert.that(vd1.tieneBanios())
+	assert.notThat(vp2.tieneBanios())
+	assert.notThat(vc1.tieneBanios())
+	
+	f1.agregarVagon(vp1)
+	f1.agregarVagon(vp2)
+	f1.agregarVagon(vc1)
+	f1.agregarVagon(vd1)
+	
+	assert.equals(165,f1.capacidadDePasajeros())
+	assert.equals(1,f1.cantidadDeVagonesPopulares())
+	assert.equals(4220,f1.dispersionDePeso())
+	assert.equals(2,f1.cantidadDeBanios())
+	assert.notThat(f1.esFormacionCarguera())
+	
+	f1.realizarMantenimiento()
+	
+	assert.equals(180,f1.capacidadDePasajeros())
+	assert.equals(2,f1.cantidadDeVagonesPopulares())
+	assert.equals(3180,f1.dispersionDePeso())
+	assert.equals(2,f1.cantidadDeBanios())
+	assert.notThat(f1.esFormacionCarguera())
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
