@@ -8,9 +8,13 @@ class Deposito {
 	
 	method necesitaConductorExperimentado() = formaciones.any({for => for.esCompleja()})
 	
+	method hayLocomotoraQueMueva(formacion) = locomotoras.any({loc => loc.capacidadDeArrastre() >= formacion.empujeFaltante()})
+	
+	method locomotoraParaMover(formacion) = locomotoras.find({loc => loc.capacidadDeArrastre() >= formacion.empujeFaltante()})
+	
 	method agregarLocomotoraA(formacion) {
-		if (!formacion.puedeMoverse() and locomotoras.any({loc => loc.capacidadDeArrastre() >= formacion.empujeFaltante()})){
-			const loc1 = locomotoras.find({loc => loc.capacidadDeArrastre() >= formacion.empujeFaltante()})
+		if (!formacion.puedeMoverse() and self.hayLocomotoraQueMueva(formacion)){
+			const loc1 = self.locomotoraParaMover(formacion)
 			formacion.agregarLocomotora(loc1)
 		}
 	}
